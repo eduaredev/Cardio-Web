@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import logos from '../assets/Logos.png';
+import fotoDoctor from '../assets/Doctor.png';
 
 export interface EstudioVisual {
   id: string;
@@ -6,28 +8,71 @@ export interface EstudioVisual {
   imagen: string;
 }
 
-export interface ServicioDetalle {
+export interface TrayectoriaItem {
   id: string;
-  nombre: string;
-  desc: string;
+  especialidad: string;
+  institucion: string;
+  aval: string;
+  logo: string;
 }
 
 const DEFAULT_CONTENT = {
-  whatsappDoctor: '529611234567',
+  whatsappDoctor: '522299846742',
   heroSubtitulo: 'CARDIÓLOGO INTERVENCIONISTA Y CARDIÓLOGO REHABILITADOR EN TUXTLA GUTIÉRREZ',
   heroTitulo: 'Dr. José Antonio Citalán Jiménez',
   conoceTitulo: 'Conoce al Dr. Antonio Citalán.',
-  doctorFoto: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80',
+  doctorFoto: fotoDoctor,
   bioParrafo1: 'El Dr. José Antonio Citalán Jiménez, es egresado de la Universidad Nacional Autónoma de Chiapas, en donde realizó sus estudios de Medicina general. Posteriormente realizó la Especialidad de Cardiología en el Hospital Central Sur de Alta Especialidad de PEMEX.',
   bioParrafo2: 'Así también realizó estudios de posgrado cursando la Alta Especialidad de Rehabilitación Cardíaca en el Centro Médico Nacional 20 de Noviembre y Alta Especialidad en Cardiología Intervencionista en el Hospital Central Militar, en la Ciudad de México.',
   bioParrafo3: 'Trabajando posteriormente como médico adscrito en el servicio de Cuidados Intensivos Cardiovasculares del Hospital Central Militar en la Ciudad de México durante 3 años en donde desempeñó actividades académicas, y de atención al paciente críticamente enfermo.',
   bioParrafo4: 'Actualmente se encuentra Certificado por el Consejo Mexicano de Cardiología, en las 3 especialidades: Cardiología Clínica, Rehabilitación Cardíaca y Cardiología Intervencionista.',
+  misionSubtitulo: 'PROPÓSITO CLÍNICO',
+  misionTitulo: 'Nuestra Misión',
   misionTexto: 'Brindar atención cardiológica de alta especialidad, diagnósticos precisos e intervenciones oportunas, acompañando a cada paciente en su rehabilitación cardíaca con calidez humana, ética médica y tecnología de vanguardia en Tuxtla Gutiérrez.',
-  visionTexto: 'Consolidarnos como el centro de referencia líder en Cardiología Clínica, Intervencionista y Rehabilitación Cardiopulmonar en el sureste de México, destacando por la prevención efectiva de enfermedades cardiovasculares y la mejora en la calidad de vida de nuestros pacientes.',
+  visionSubtitulo: 'PROYECCIÓN MÉDICA',
+  visionTitulo: 'Nuestra Visión',
+  visionTexto: 'Consolidarnos como el centro de referencia líder en Cardiología Clínica, Intervencionista y Rehabilitación Cardiopulmonar en el sureste de México, destacando por la prevención efectiva de enfermedades cardiovasculares y la mejora continua en la calidad de vida de nuestros pacientes.',
+  valor1Titulo: 'Precisión Diagnóstica',
+  valor1Texto: 'Protocolos clínicos respaldados por equipamiento de alta tecnología y estándares internacionales en cardiología intervencionista.',
+  valor2Titulo: 'Ética y Transparencia',
+  valor2Texto: 'Comunicación clara, honesta y detallada con el paciente y su familia en cada etapa del diagnóstico y tratamiento.',
+  valor3Titulo: 'Rehabilitación Integral',
+  valor3Texto: 'Seguimiento personalizado enfocado en recuperar la capacidad funcional y prevenir futuros eventos cardiovasculares.',
   esloganServicios: '¡Cada latido es importante para nosotros!',
   ubicacionTitulo: 'Ubícanos en:',
   ubicacionDireccion: '18 A poniente sur # 5, esquina Av 2 sur poniente Sur, Col. Xamaipac Tuxtla Gutiérrez Chiapas. CP 29060',
   ubicacionClinica: 'CLINICA DE ESPECIALIDADES DR. MARIN',
+  trayectoriaItems: [
+    {
+      id: 't1',
+      especialidad: 'Cardiología Intervencionista',
+      institucion: 'Hospital Central Militar CDMX.',
+      aval: 'Avalado por la Universidad del Ejército y Fuerza Aérea',
+      logo: 'https://via.placeholder.com/160x160/ffffff/0f172a?text=Escuela+Militar'
+    },
+    {
+      id: 't2',
+      especialidad: 'Rehabilitación Cardiaca',
+      institucion: 'Centro Médico Nacional 20 de Noviembre.',
+      aval: 'Avalado por la Universidad La Salle.',
+      logo: 'https://via.placeholder.com/160x160/ffffff/0f172a?text=Univ+La+Salle'
+    },
+    {
+      id: 't3',
+      especialidad: 'Cardiología',
+      institucion: 'Hospital Central Sur de Alta Especialidad de PEMEX.',
+      aval: 'Avalado por la Universidad Nacional Autónoma de México. (UNAM)',
+      logo: 'https://via.placeholder.com/160x160/ffffff/0f172a?text=UNAM'
+    },
+    {
+      id: 't4',
+      especialidad: 'Médico Cirujano',
+      institucion: 'Universidad Nacional Autónoma de Chiapas (UNACH)',
+      aval: 'Facultad de Medicina Humana Dr. Manuel Velasco Suárez',
+      logo: 'https://via.placeholder.com/160x160/1e3a5f/ffffff?text=UNACH'
+    }
+  ] as TrayectoriaItem[],
+  bannerInstitucionesUrl: logos,
   estudiosVisuales: [
     { id: '1', titulo: 'Electrocardiograma.', imagen: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80' },
     { id: '2', titulo: 'Estudio Holter', imagen: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80' },
@@ -75,6 +120,7 @@ interface SiteContextProps {
   resetContent: () => void;
   citasOcupadas: Record<string, string[]>;
   registrarCitaOcupada: (fecha: string, hora: string) => void;
+  toggleHorarioOcupado: (fecha: string, hora: string) => void;
 }
 
 const SiteContext = createContext<SiteContextProps | undefined>(undefined);
@@ -116,7 +162,6 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const loginAdmin = (password: string) => {
-    // Contraseña del doctor para editar la página
     if (password === 'cardio2026') {
       setIsAdmin(true);
       setIsEditing(true);
@@ -149,6 +194,18 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  // Permite al doctor bloquear o liberar un horario haciendo clic sobre él
+  const toggleHorarioOcupado = (fecha: string, hora: string) => {
+    setCitasOcupadas((prev) => {
+      const horasDia = prev[fecha] || [];
+      const existe = horasDia.includes(hora);
+      const nuevasHoras = existe
+        ? horasDia.filter((h) => h !== hora)
+        : [...horasDia, hora];
+      return { ...prev, [fecha]: nuevasHoras };
+    });
+  };
+
   return (
     <SiteContext.Provider
       value={{
@@ -163,7 +220,8 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
         updateField,
         resetContent,
         citasOcupadas,
-        registrarCitaOcupada
+        registrarCitaOcupada,
+        toggleHorarioOcupado
       }}
     >
       {children}
@@ -177,7 +235,6 @@ export const useSite = () => {
   return context;
 };
 
-/* --- Componente de Texto Editable solo por el Doctor --- */
 interface EditableTextProps {
   value: string;
   onChange: (newVal: string) => void;
@@ -216,7 +273,6 @@ export const EditableText: React.FC<EditableTextProps> = ({
   );
 };
 
-/* --- Componente de Imagen Editable solo por el Doctor --- */
 interface EditableImageProps {
   src: string;
   alt: string;
@@ -245,14 +301,14 @@ export const EditableImage: React.FC<EditableImageProps> = ({ src, alt, onChange
       {isEditing && (
         <div className="editable-img-overlay">
           <label className="upload-btn-label">
-            📷 Subir foto desde PC
+            Subir imagen
             <input type="file" accept="image/*" onChange={handleFileUpload} hidden />
           </label>
           <input
             type="text"
             value={src}
             onChange={(e) => onChange(e.target.value)}
-            placeholder="O pega la URL / ruta de imagen"
+            placeholder="URL de imagen"
             className="cms-url-input"
           />
         </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { useSite, EditableText, EditableImage } from '../../context/SiteContext';
+import { useSite, EditableText, EditableImage, type TrayectoriaItem } from '../../context/SiteContext';
 
 const HORARIOS_BASE = [
   '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM',
@@ -9,7 +9,15 @@ const HORARIOS_BASE = [
 ];
 
 const HeroSection = () => {
-  const { content, updateField, isEditing, citasOcupadas, registrarCitaOcupada } = useSite();
+  const {
+    content,
+    updateField,
+    isAdmin,
+    isEditing,
+    citasOcupadas,
+    registrarCitaOcupada,
+    toggleHorarioOcupado
+  } = useSite();
 
   const hoy = new Date().toISOString().split('T')[0];
   const [fecha, setFecha] = useState<string>(hoy);
@@ -19,6 +27,7 @@ const HeroSection = () => {
   const [edadPaciente, setEdadPaciente] = useState<string>('');
   const [motivo, setMotivo] = useState<string>('Consulta de Valoración');
   const [sintomas, setSintomas] = useState<string>('');
+  const [adminScheduleMode, setAdminScheduleMode] = useState<boolean>(false);
 
   const horasOcupadasHoy = citasOcupadas[fecha] || [];
 
@@ -26,13 +35,19 @@ const HeroSection = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2 }
+      transition: { staggerChildren: 0.18 }
     }
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 25 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } }
+  };
+
+  const handleTrayectoriaChange = (index: number, field: keyof TrayectoriaItem, value: string) => {
+    const copia = [...content.trayectoriaItems];
+    copia[index] = { ...copia[index], [field]: value };
+    updateField('trayectoriaItems', copia);
   };
 
   const handleReservarWhatsApp = () => {
@@ -41,22 +56,21 @@ const HeroSection = () => {
       return;
     }
 
-    // Bloquea el horario en el calendario local
     registrarCitaOcupada(fecha, horaSeleccionada);
 
-    // Mensaje automatizado estructurado para que el doctor responda directamente
     const mensajeAutomatizado = [
+      `*NUEVA SOLICITUD DE CITA CARDIOLÓGICA*`,
       `-----------------------------------------`,
-      `👨‍⚕️ *Para:* Dr. José Antonio Citalán Jiménez`,
-      `👤 *Paciente:* ${nombrePaciente}`,
-      `🎂 *Edad:* ${edadPaciente ? `${edadPaciente} años` : 'No especificada'}`,
-      `📱 *Teléfono de contacto:* ${telefonoPaciente}`,
-      `🩺 *Estudio / Consulta:* ${motivo}`,
-      `📅 *Fecha solicitada:* ${fecha}`,
-      `⏰ *Horario:* ${horaSeleccionada}`,
-      `📝 *Motivo o síntomas:* ${sintomas.trim() ? sintomas : 'Valoración general'}`,
+      `*Médico:* Dr. José Antonio Citalán Jiménez`,
+      `*Paciente:* ${nombrePaciente}`,
+      `*Edad:* ${edadPaciente ? `${edadPaciente} años` : 'No especificada'}`,
+      `*Teléfono:* ${telefonoPaciente}`,
+      `*Estudio / Consulta:* ${motivo}`,
+      `*Fecha solicitada:* ${fecha}`,
+      `*Horario:* ${horaSeleccionada}`,
+      `*Motivo o síntomas:* ${sintomas.trim() ? sintomas : 'Valoración general'}`,
       `-----------------------------------------`,
-      `_Mensaje generado automáticamente desde el portal web. Quedo atento(a) a la confirmación de mi cita._`
+      `_Solicitud enviada desde el sistema web de citas. Quedo atento(a) a su confirmación._`
     ].join('\n');
 
     const numeroLimpio = content.whatsappDoctor.replace(/\D/g, '');
@@ -69,7 +83,7 @@ const HeroSection = () => {
   return (
     <div className="inicio-wrapper">
       <section className="hero-container">
-        {/* Columna Izquierda: Foto del Doctor + Biografía Editable */}
+        {/* Columna Izquierda: Perfil y Biografía */}
         <motion.div
           className="hero-profile"
           variants={containerVariants}
@@ -94,7 +108,6 @@ const HeroSection = () => {
             />
           </motion.div>
 
-          {/* Tarjeta "Conoce al Dr. Antonio Citalán" con foto y biografía completa */}
           <motion.div variants={itemVariants} className="doctor-bio-card">
             <div className="doctor-photo-col">
               <EditableImage
@@ -150,26 +163,44 @@ const HeroSection = () => {
           </motion.div>
         </motion.div>
 
-        {/* Columna Derecha: Sistema de Calendario y Reservación Automatizada */}
+        {/* Columna Derecha: Agenda Interactiva */}
         <motion.div
           className="hero-calendar-wrapper"
-          initial={{ opacity: 0, x: 40 }}
+          initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.25 }}
         >
           <div className="calendar-card">
             <div className="calendar-header">
-              <h2>Agenda tu Cita</h2>
+              <div className="calendar-title-row">
+                <h2>Agenda tu Cita</h2>
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={() => setAdminScheduleMode(!adminScheduleMode)}
+                    className={`admin-schedule-toggle ${adminScheduleMode ? 'active' : ''}`}
+                  >
+                    {adminScheduleMode ? 'Salir de Gestión de Horas' : 'Bloquear / Liberar Horas'}
+                  </button>
+                )}
+              </div>
               <p>Reservación inmediata con envío automatizado a WhatsApp</p>
+
               {isEditing && (
                 <div className="doctor-phone-edit">
-                  <label>📱 Número de WhatsApp del Doctor (con código de país 52):</label>
+                  <label>Número de WhatsApp del Doctor (Código 52 + 10 dígitos):</label>
                   <input
                     type="text"
                     value={content.whatsappDoctor}
                     onChange={(e) => updateField('whatsappDoctor', e.target.value)}
                     className="cms-editable-input"
                   />
+                </div>
+              )}
+
+              {isAdmin && adminScheduleMode && (
+                <div className="admin-schedule-notice">
+                  <strong>Panel de Horarios del Doctor:</strong> Selecciona una fecha abajo y haz clic sobre cualquier horario para <strong>bloquearlo (Ocupado)</strong> o <strong>desbloquearlo (Disponible)</strong>.
                 </div>
               )}
             </div>
@@ -229,7 +260,7 @@ const HeroSection = () => {
                 <select
                   value={motivo}
                   onChange={(e) => setMotivo(e.target.value)}
-                  className="calendar-input"
+                  className="calendar-input select-constrained"
                 >
                   <option value="Consulta de Valoración">Consulta de Valoración</option>
                   {content.listaServicios.map((serv) => (
@@ -242,7 +273,9 @@ const HeroSection = () => {
             </div>
 
             <div className="form-group">
-              <label>6. Selecciona un Horario Disponible *</label>
+              <label>
+                6. {isAdmin && adminScheduleMode ? 'Haz clic para Bloquear / Desbloquear:' : 'Selecciona un Horario Disponible *'}
+              </label>
               <div className="time-slots-grid">
                 {HORARIOS_BASE.map((hora) => {
                   const estaOcupado = horasOcupadasHoy.includes(hora);
@@ -252,9 +285,15 @@ const HeroSection = () => {
                     <button
                       key={hora}
                       type="button"
-                      disabled={estaOcupado}
-                      onClick={() => setHoraSeleccionada(hora)}
-                      className={`slot-btn ${estaOcupado ? 'ocupado' : ''} ${estaSeleccionado ? 'seleccionado' : ''}`}
+                      disabled={!adminScheduleMode && estaOcupado}
+                      onClick={() => {
+                        if (isAdmin && adminScheduleMode) {
+                          toggleHorarioOcupado(fecha, hora);
+                        } else {
+                          setHoraSeleccionada(hora);
+                        }
+                      }}
+                      className={`slot-btn ${estaOcupado ? 'ocupado' : ''} ${estaSeleccionado && !adminScheduleMode ? 'seleccionado' : ''} ${isAdmin && adminScheduleMode ? 'admin-slot-mode' : ''}`}
                     >
                       {hora}
                     </button>
@@ -285,30 +324,52 @@ const HeroSection = () => {
         </motion.div>
       </section>
 
-      {/* Sección Inferior: Credenciales Académicas */}
-      <section className="credentials-section">
-        <h2 className="section-title">Formación Académica y Avales</h2>
-        <div className="credentials-grid">
-          <div className="cred-card">
-            <h3>Cardiología Intervencionista</h3>
-            <p className="cred-place">Hospital Central Militar CDMX.</p>
-            <span className="cred-aval">Avalado por la Universidad del Ejército y Fuerza Aérea</span>
-          </div>
-          <div className="cred-card">
-            <h3>Rehabilitación Cardíaca</h3>
-            <p className="cred-place">Centro Médico Nacional 20 de Noviembre.</p>
-            <span className="cred-aval">Avalado por la Universidad La Salle.</span>
-          </div>
-          <div className="cred-card">
-            <h3>Cardiología</h3>
-            <p className="cred-place">Hospital Central Sur de Alta Especialidad de PEMEX.</p>
-            <span className="cred-aval">Avalado por la Universidad Nacional Autónoma de México. (UNAM)</span>
-          </div>
-          <div className="cred-card">
-            <h3>Médico Cirujano</h3>
-            <p className="cred-place">Facultad de Medicina Humana Dr. Manuel Velasco Suárez</p>
-            <span className="cred-aval">Universidad Nacional Autónoma de Chiapas (UNACH)</span>
-          </div>
+      {/* Sección Inferior: Trayectoria con Escudos y Cintilla de Instituciones */}
+      <section className="trayectoria-section">
+        <div className="trayectoria-grid">
+          {content.trayectoriaItems.map((item, idx) => (
+            <div key={item.id} className="trayectoria-item">
+              <div className="trayectoria-logo-box">
+                <EditableImage
+                  src={item.logo}
+                  alt={item.especialidad}
+                  className="trayectoria-shield-img"
+                  onChange={(newLogo) => handleTrayectoriaChange(idx, 'logo', newLogo)}
+                />
+              </div>
+              <div className="trayectoria-info">
+                <EditableText
+                  as="h3"
+                  className="trayectoria-title"
+                  value={item.especialidad}
+                  onChange={(val) => handleTrayectoriaChange(idx, 'especialidad', val)}
+                />
+                <EditableText
+                  as="p"
+                  className="trayectoria-hospital"
+                  value={item.institucion}
+                  onChange={(val) => handleTrayectoriaChange(idx, 'institucion', val)}
+                />
+                <EditableText
+                  as="p"
+                  className="trayectoria-aval"
+                  value={item.aval}
+                  onChange={(val) => handleTrayectoriaChange(idx, 'aval', val)}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="trayectoria-red-divider"></div>
+
+        <div className="institutions-strip-wrapper">
+          <EditableImage
+            src={content.bannerInstitucionesUrl}
+            alt="Instituciones Avales: UNACH, UNAM, Universidad La Salle, Escuela Médico Militar, PEMEX, CMN 20 de Noviembre, Hospital Central Militar, Consejo Mexicano de Cardiología"
+            className="institutions-strip-img"
+            onChange={(newBanner) => updateField('bannerInstitucionesUrl', newBanner)}
+          />
         </div>
       </section>
     </div>
