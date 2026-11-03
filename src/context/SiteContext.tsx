@@ -1,0 +1,262 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+export interface EstudioVisual {
+  id: string;
+  titulo: string;
+  imagen: string;
+}
+
+export interface ServicioDetalle {
+  id: string;
+  nombre: string;
+  desc: string;
+}
+
+const DEFAULT_CONTENT = {
+  whatsappDoctor: '529611234567',
+  heroSubtitulo: 'CARDIÓLOGO INTERVENCIONISTA Y CARDIÓLOGO REHABILITADOR EN TUXTLA GUTIÉRREZ',
+  heroTitulo: 'Dr. José Antonio Citalán Jiménez',
+  conoceTitulo: 'Conoce al Dr. Antonio Citalán.',
+  doctorFoto: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=80',
+  bioParrafo1: 'El Dr. José Antonio Citalán Jiménez, es egresado de la Universidad Nacional Autónoma de Chiapas, en donde realizó sus estudios de Medicina general. Posteriormente realizó la Especialidad de Cardiología en el Hospital Central Sur de Alta Especialidad de PEMEX.',
+  bioParrafo2: 'Así también realizó estudios de posgrado cursando la Alta Especialidad de Rehabilitación Cardíaca en el Centro Médico Nacional 20 de Noviembre y Alta Especialidad en Cardiología Intervencionista en el Hospital Central Militar, en la Ciudad de México.',
+  bioParrafo3: 'Trabajando posteriormente como médico adscrito en el servicio de Cuidados Intensivos Cardiovasculares del Hospital Central Militar en la Ciudad de México durante 3 años en donde desempeñó actividades académicas, y de atención al paciente críticamente enfermo.',
+  bioParrafo4: 'Actualmente se encuentra Certificado por el Consejo Mexicano de Cardiología, en las 3 especialidades: Cardiología Clínica, Rehabilitación Cardíaca y Cardiología Intervencionista.',
+  misionTexto: 'Brindar atención cardiológica de alta especialidad, diagnósticos precisos e intervenciones oportunas, acompañando a cada paciente en su rehabilitación cardíaca con calidez humana, ética médica y tecnología de vanguardia en Tuxtla Gutiérrez.',
+  visionTexto: 'Consolidarnos como el centro de referencia líder en Cardiología Clínica, Intervencionista y Rehabilitación Cardiopulmonar en el sureste de México, destacando por la prevención efectiva de enfermedades cardiovasculares y la mejora en la calidad de vida de nuestros pacientes.',
+  esloganServicios: '¡Cada latido es importante para nosotros!',
+  ubicacionTitulo: 'Ubícanos en:',
+  ubicacionDireccion: '18 A poniente sur # 5, esquina Av 2 sur poniente Sur, Col. Xamaipac Tuxtla Gutiérrez Chiapas. CP 29060',
+  ubicacionClinica: 'CLINICA DE ESPECIALIDADES DR. MARIN',
+  estudiosVisuales: [
+    { id: '1', titulo: 'Electrocardiograma.', imagen: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80' },
+    { id: '2', titulo: 'Estudio Holter', imagen: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80' },
+    { id: '3', titulo: 'Ecocardiograma.', imagen: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=600&q=80' },
+    { id: '4', titulo: 'Prueba de ejercicio o de esfuerzo.', imagen: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=600&q=80' },
+    { id: '5', titulo: 'Estudio MAPA.', imagen: 'https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&w=600&q=80' },
+    { id: '6', titulo: 'Implante de Marcapasos.', imagen: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=600&q=80' },
+    { id: '7', titulo: 'Cateterismo cardíaco o Coronariografía Diagnóstica y Terapéutica.', imagen: 'https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?auto=format&fit=crop&w=600&q=80' },
+    { id: '8', titulo: 'Rehabilitación Cardíaca.', imagen: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80' }
+  ] as EstudioVisual[],
+  listaServicios: [
+    'Electrocardiograma',
+    'Estudio Holter de 24 horas',
+    'Monitoreo Ambulatorio de la Presión Arterial (MAPA)',
+    'Ecocardiograma',
+    'Prueba de esfuerzo',
+    'Valoración de Riesgo quirúrgico',
+    'Cateterismo Cardíaco',
+    'Implante de Marcapasos',
+    'Rehabilitación Cardiopulmonar',
+    'Check up cardiovascular'
+  ],
+  especialistaEn: [
+    'Hipertensión',
+    'Cardiopatía Isquémica',
+    'Infarto agudo al miocardio',
+    'Arritmias',
+    'Rehabilitación cardíaca',
+    'Insuficiencia cardíaca'
+  ]
+};
+
+export type ContentType = typeof DEFAULT_CONTENT;
+
+interface SiteContextProps {
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
+  isAdmin: boolean;
+  isEditing: boolean;
+  setIsEditing: (val: boolean) => void;
+  loginAdmin: (password: string) => boolean;
+  logoutAdmin: () => void;
+  content: ContentType;
+  updateField: <K extends keyof ContentType>(key: K, value: ContentType[K]) => void;
+  resetContent: () => void;
+  citasOcupadas: Record<string, string[]>;
+  registrarCitaOcupada: (fecha: string, hora: string) => void;
+}
+
+const SiteContext = createContext<SiteContextProps | undefined>(undefined);
+
+export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    return (localStorage.getItem('cardio_theme') as 'dark' | 'light') || 'dark';
+  });
+
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const [content, setContent] = useState<ContentType>(() => {
+    const saved = localStorage.getItem('cardio_cms_content');
+    return saved ? { ...DEFAULT_CONTENT, ...JSON.parse(saved) } : DEFAULT_CONTENT;
+  });
+
+  const [citasOcupadas, setCitasOcupadas] = useState<Record<string, string[]>>(() => {
+    const saved = localStorage.getItem('cardio_citas_ocupadas');
+    const hoy = new Date().toISOString().split('T')[0];
+    return saved ? JSON.parse(saved) : { [hoy]: ['10:00 AM', '04:30 PM'] };
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('cardio_theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    localStorage.setItem('cardio_cms_content', JSON.stringify(content));
+  }, [content]);
+
+  useEffect(() => {
+    localStorage.setItem('cardio_citas_ocupadas', JSON.stringify(citasOcupadas));
+  }, [citasOcupadas]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
+  const loginAdmin = (password: string) => {
+    // Contraseña del doctor para editar la página
+    if (password === 'cardio2026') {
+      setIsAdmin(true);
+      setIsEditing(true);
+      return true;
+    }
+    return false;
+  };
+
+  const logoutAdmin = () => {
+    setIsAdmin(false);
+    setIsEditing(false);
+  };
+
+  const updateField = <K extends keyof ContentType>(key: K, value: ContentType[K]) => {
+    setContent((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const resetContent = () => {
+    if (window.confirm('¿Restaurar todos los textos e imágenes a los valores originales?')) {
+      setContent(DEFAULT_CONTENT);
+      localStorage.removeItem('cardio_cms_content');
+    }
+  };
+
+  const registrarCitaOcupada = (fecha: string, hora: string) => {
+    setCitasOcupadas((prev) => {
+      const horasDia = prev[fecha] || [];
+      if (horasDia.includes(hora)) return prev;
+      return { ...prev, [fecha]: [...horasDia, hora] };
+    });
+  };
+
+  return (
+    <SiteContext.Provider
+      value={{
+        theme,
+        toggleTheme,
+        isAdmin,
+        isEditing,
+        setIsEditing,
+        loginAdmin,
+        logoutAdmin,
+        content,
+        updateField,
+        resetContent,
+        citasOcupadas,
+        registrarCitaOcupada
+      }}
+    >
+      {children}
+    </SiteContext.Provider>
+  );
+};
+
+export const useSite = () => {
+  const context = useContext(SiteContext);
+  if (!context) throw new Error('useSite debe usarse dentro de SiteProvider');
+  return context;
+};
+
+/* --- Componente de Texto Editable solo por el Doctor --- */
+interface EditableTextProps {
+  value: string;
+  onChange: (newVal: string) => void;
+  multiline?: boolean;
+  className?: string;
+  as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
+}
+
+export const EditableText: React.FC<EditableTextProps> = ({
+  value,
+  onChange,
+  multiline = false,
+  className = '',
+  as: Tag = 'span'
+}) => {
+  const { isEditing } = useSite();
+
+  if (!isEditing) {
+    return <Tag className={className}>{value}</Tag>;
+  }
+
+  return multiline ? (
+    <textarea
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className={`cms-editable-input ${className}`}
+      rows={3}
+    />
+  ) : (
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className={`cms-editable-input ${className}`}
+    />
+  );
+};
+
+/* --- Componente de Imagen Editable solo por el Doctor --- */
+interface EditableImageProps {
+  src: string;
+  alt: string;
+  onChange: (newSrc: string) => void;
+  className?: string;
+}
+
+export const EditableImage: React.FC<EditableImageProps> = ({ src, alt, onChange, className = '' }) => {
+  const { isEditing } = useSite();
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        onChange(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div className="editable-img-container">
+      <img src={src} alt={alt} className={className} />
+      {isEditing && (
+        <div className="editable-img-overlay">
+          <label className="upload-btn-label">
+            📷 Subir foto desde PC
+            <input type="file" accept="image/*" onChange={handleFileUpload} hidden />
+          </label>
+          <input
+            type="text"
+            value={src}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder="O pega la URL / ruta de imagen"
+            className="cms-url-input"
+          />
+        </div>
+      )}
+    </div>
+  );
+};
