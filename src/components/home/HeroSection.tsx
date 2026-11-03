@@ -83,9 +83,9 @@ const HeroSection = () => {
   return (
     <div className="inicio-wrapper">
       <section className="hero-container">
-        {/* Columna Izquierda: Perfil y Biografía */}
+        {/* Encabezado / Espacio de ancho completo para el futuro Banner */}
         <motion.div
-          className="hero-profile"
+          className="hero-top-header"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -107,8 +107,17 @@ const HeroSection = () => {
               onChange={(val) => updateField('heroTitulo', val)}
             />
           </motion.div>
+        </motion.div>
 
-          <motion.div variants={itemVariants} className="doctor-bio-card">
+        {/* Fila inferior: Ficha de Biografía y Ficha de Agenda a la par */}
+        <div className="hero-cards-row">
+          {/* Columna Izquierda: Ficha de Biografía */}
+          <motion.div
+            className="doctor-bio-card"
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+          >
             <div className="doctor-photo-col">
               <EditableImage
                 src={content.doctorFoto}
@@ -161,167 +170,167 @@ const HeroSection = () => {
               />
             </div>
           </motion.div>
-        </motion.div>
 
-        {/* Columna Derecha: Agenda Interactiva */}
-        <motion.div
-          className="hero-calendar-wrapper"
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.25 }}
-        >
-          <div className="calendar-card">
-            <div className="calendar-header">
-              <div className="calendar-title-row">
-                <h2>Agenda tu Cita</h2>
-                {isAdmin && (
-                  <button
-                    type="button"
-                    onClick={() => setAdminScheduleMode(!adminScheduleMode)}
-                    className={`admin-schedule-toggle ${adminScheduleMode ? 'active' : ''}`}
-                  >
-                    {adminScheduleMode ? 'Salir de Gestión de Horas' : 'Bloquear / Liberar Horas'}
-                  </button>
+          {/* Columna Derecha: Agenda Interactiva al mismo nivel */}
+          <motion.div
+            className="hero-calendar-wrapper"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+          >
+            <div className="calendar-card">
+              <div className="calendar-header">
+                <div className="calendar-title-row">
+                  <h2>Agenda tu Cita</h2>
+                  {isAdmin && (
+                    <button
+                      type="button"
+                      onClick={() => setAdminScheduleMode(!adminScheduleMode)}
+                      className={`admin-schedule-toggle ${adminScheduleMode ? 'active' : ''}`}
+                    >
+                      {adminScheduleMode ? 'Salir de Gestión de Horas' : 'Bloquear / Liberar Horas'}
+                    </button>
+                  )}
+                </div>
+                <p>Reservación inmediata con envío automatizado a WhatsApp</p>
+
+                {isEditing && (
+                  <div className="doctor-phone-edit">
+                    <label>Número de WhatsApp del Doctor (Código 52 + 10 dígitos):</label>
+                    <input
+                      type="text"
+                      value={content.whatsappDoctor}
+                      onChange={(e) => updateField('whatsappDoctor', e.target.value)}
+                      className="cms-editable-input"
+                    />
+                  </div>
+                )}
+
+                {isAdmin && adminScheduleMode && (
+                  <div className="admin-schedule-notice">
+                    <strong>Panel de Horarios del Doctor:</strong> Selecciona una fecha abajo y haz clic sobre cualquier horario para <strong>bloquearlo (Ocupado)</strong> o <strong>desbloquearlo (Disponible)</strong>.
+                  </div>
                 )}
               </div>
-              <p>Reservación inmediata con envío automatizado a WhatsApp</p>
 
-              {isEditing && (
-                <div className="doctor-phone-edit">
-                  <label>Número de WhatsApp del Doctor (Código 52 + 10 dígitos):</label>
+              <div className="form-group">
+                <label>1. Nombre Completo del Paciente *</label>
+                <input
+                  type="text"
+                  placeholder="Ej. María González López"
+                  value={nombrePaciente}
+                  onChange={(e) => setNombrePaciente(e.target.value)}
+                  className="calendar-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label>2. Teléfono del Paciente *</label>
                   <input
-                    type="text"
-                    value={content.whatsappDoctor}
-                    onChange={(e) => updateField('whatsappDoctor', e.target.value)}
-                    className="cms-editable-input"
+                    type="tel"
+                    placeholder="Ej. 961 123 4567"
+                    value={telefonoPaciente}
+                    onChange={(e) => setTelefonoPaciente(e.target.value)}
+                    className="calendar-input"
                   />
                 </div>
-              )}
 
-              {isAdmin && adminScheduleMode && (
-                <div className="admin-schedule-notice">
-                  <strong>Panel de Horarios del Doctor:</strong> Selecciona una fecha abajo y haz clic sobre cualquier horario para <strong>bloquearlo (Ocupado)</strong> o <strong>desbloquearlo (Disponible)</strong>.
+                <div className="form-group">
+                  <label>3. Edad</label>
+                  <input
+                    type="number"
+                    placeholder="Ej. 45"
+                    value={edadPaciente}
+                    onChange={(e) => setEdadPaciente(e.target.value)}
+                    className="calendar-input"
+                  />
                 </div>
-              )}
-            </div>
+              </div>
 
-            <div className="form-group">
-              <label>1. Nombre Completo del Paciente *</label>
-              <input
-                type="text"
-                placeholder="Ej. María González López"
-                value={nombrePaciente}
-                onChange={(e) => setNombrePaciente(e.target.value)}
-                className="calendar-input"
-              />
-            </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>4. Fecha de Cita *</label>
+                  <input
+                    type="date"
+                    min={hoy}
+                    value={fecha}
+                    onChange={(e) => {
+                      setFecha(e.target.value);
+                      setHoraSeleccionada(null);
+                    }}
+                    className="calendar-input"
+                  />
+                </div>
 
-            <div className="form-row">
+                <div className="form-group">
+                  <label>5. Servicio / Estudio *</label>
+                  <select
+                    value={motivo}
+                    onChange={(e) => setMotivo(e.target.value)}
+                    className="calendar-input select-constrained"
+                  >
+                    <option value="Consulta de Valoración">Consulta de Valoración</option>
+                    {content.listaServicios.map((serv) => (
+                      <option key={serv} value={serv}>
+                        {serv}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
               <div className="form-group">
-                <label>2. Teléfono del Paciente *</label>
+                <label>
+                  6. {isAdmin && adminScheduleMode ? 'Haz clic para Bloquear / Desbloquear:' : 'Selecciona un Horario Disponible *'}
+                </label>
+                <div className="time-slots-grid">
+                  {HORARIOS_BASE.map((hora) => {
+                    const estaOcupado = horasOcupadasHoy.includes(hora);
+                    const estaSeleccionado = horaSeleccionada === hora;
+
+                    return (
+                      <button
+                        key={hora}
+                        type="button"
+                        disabled={!adminScheduleMode && estaOcupado}
+                        onClick={() => {
+                          if (isAdmin && adminScheduleMode) {
+                            toggleHorarioOcupado(fecha, hora);
+                          } else {
+                            setHoraSeleccionada(hora);
+                          }
+                        }}
+                        className={`slot-btn ${estaOcupado ? 'ocupado' : ''} ${estaSeleccionado && !adminScheduleMode ? 'seleccionado' : ''} ${isAdmin && adminScheduleMode ? 'admin-slot-mode' : ''}`}
+                      >
+                        {hora}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>7. Síntomas o Motivo Breve (Opcional)</label>
                 <input
-                  type="tel"
-                  placeholder="Ej. 961 123 4567"
-                  value={telefonoPaciente}
-                  onChange={(e) => setTelefonoPaciente(e.target.value)}
+                  type="text"
+                  placeholder="Ej. Dolor en el pecho, chequeo de presión arterial..."
+                  value={sintomas}
+                  onChange={(e) => setSintomas(e.target.value)}
                   className="calendar-input"
                 />
               </div>
 
-              <div className="form-group">
-                <label>3. Edad</label>
-                <input
-                  type="number"
-                  placeholder="Ej. 45"
-                  value={edadPaciente}
-                  onChange={(e) => setEdadPaciente(e.target.value)}
-                  className="calendar-input"
-                />
-              </div>
+              <button
+                type="button"
+                onClick={handleReservarWhatsApp}
+                className="btn-confirm-whatsapp"
+              >
+                Enviar Ficha de Cita por WhatsApp
+              </button>
             </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label>4. Fecha de Cita *</label>
-                <input
-                  type="date"
-                  min={hoy}
-                  value={fecha}
-                  onChange={(e) => {
-                    setFecha(e.target.value);
-                    setHoraSeleccionada(null);
-                  }}
-                  className="calendar-input"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>5. Servicio / Estudio *</label>
-                <select
-                  value={motivo}
-                  onChange={(e) => setMotivo(e.target.value)}
-                  className="calendar-input select-constrained"
-                >
-                  <option value="Consulta de Valoración">Consulta de Valoración</option>
-                  {content.listaServicios.map((serv) => (
-                    <option key={serv} value={serv}>
-                      {serv}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label>
-                6. {isAdmin && adminScheduleMode ? 'Haz clic para Bloquear / Desbloquear:' : 'Selecciona un Horario Disponible *'}
-              </label>
-              <div className="time-slots-grid">
-                {HORARIOS_BASE.map((hora) => {
-                  const estaOcupado = horasOcupadasHoy.includes(hora);
-                  const estaSeleccionado = horaSeleccionada === hora;
-
-                  return (
-                    <button
-                      key={hora}
-                      type="button"
-                      disabled={!adminScheduleMode && estaOcupado}
-                      onClick={() => {
-                        if (isAdmin && adminScheduleMode) {
-                          toggleHorarioOcupado(fecha, hora);
-                        } else {
-                          setHoraSeleccionada(hora);
-                        }
-                      }}
-                      className={`slot-btn ${estaOcupado ? 'ocupado' : ''} ${estaSeleccionado && !adminScheduleMode ? 'seleccionado' : ''} ${isAdmin && adminScheduleMode ? 'admin-slot-mode' : ''}`}
-                    >
-                      {hora}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label>7. Síntomas o Motivo Breve (Opcional)</label>
-              <input
-                type="text"
-                placeholder="Ej. Dolor en el pecho, chequeo de presión arterial..."
-                value={sintomas}
-                onChange={(e) => setSintomas(e.target.value)}
-                className="calendar-input"
-              />
-            </div>
-
-            <button
-              type="button"
-              onClick={handleReservarWhatsApp}
-              className="btn-confirm-whatsapp"
-            >
-              Enviar Ficha de Cita por WhatsApp
-            </button>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Sección Inferior: Trayectoria con Escudos y Cintilla de Instituciones */}

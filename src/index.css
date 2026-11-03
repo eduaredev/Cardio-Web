@@ -263,11 +263,25 @@ body,
   max-width: 1540px;
   margin: 0 auto;
   min-height: calc(100vh - 82px);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2.5rem 4%;
+}
+
+.hero-top-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.hero-cards-row {
+  width: 100%;
   display: grid;
   grid-template-columns: 1.3fr 0.95fr;
   gap: 1.75rem;
-  padding: 2.5rem 4%;
-  align-items: start;
+  align-items: stretch; /* Hace que ambas fichas empecen y se alineen a la par */
 }
 
 .hero-profile {
@@ -292,12 +306,13 @@ body,
 }
 
 .doctor-bio-card {
+  height: 100%;
   display: grid;
   grid-template-columns: 350px 1fr;
-  gap: 1.5rem;
+  gap: 1.75rem;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  padding: 1.65rem;
+  padding: 1.75rem;
   border-radius: 20px;
   box-shadow: var(--shadow-card);
   align-items: start;
@@ -1096,6 +1111,9 @@ body,
   }
   .estudios-visual-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-cards-row {
+    grid-template-columns: 1fr;
   }
 }
 
