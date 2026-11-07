@@ -1,0 +1,1130 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+:root,
+[data-theme="dark"] {
+  --bg-main: #060b16;
+  --bg-secondary: #0f172a;
+  --bg-card: rgba(15, 23, 42, 0.85);
+  --bg-navbar: rgba(6, 11, 22, 0.9);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-body: #cbd5e1;
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --accent-red: #e11d48;
+  --accent-blue: #2563eb;
+  --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"] {
+  --bg-main: #f4f6f9;
+  --bg-secondary: #eaecef;
+  --bg-card: #ffffff;
+  --bg-navbar: rgba(255, 255, 255, 0.95);
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-body: #334155;
+  --border-subtle: rgba(15, 23, 42, 0.12);
+  --accent-red: #d90429;
+  --accent-blue: #1d4ed8;
+  --shadow-card: 0 15px 35px rgba(15, 23, 42, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family:
+    "Plus Jakarta Sans",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  overflow-x: hidden;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* --- Barra Superior de Edición del Doctor --- */
+.cms-top-banner {
+  background: linear-gradient(90deg, #991b1b, #e11d48);
+  color: #ffffff;
+  padding: 0.6rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  z-index: 2000;
+}
+
+.cms-banner-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.cms-reset-btn,
+.cms-done-btn {
+  padding: 0.35rem 0.85rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.cms-done-btn {
+  background: #ffffff;
+  color: #991b1b;
+  border: none;
+}
+
+/* --- Inputs Editables (Modo Médico) --- */
+.cms-editable-input {
+  width: 100%;
+  background: rgba(225, 29, 72, 0.08);
+  border: 2px dashed var(--accent-red);
+  color: var(--text-main);
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0.2rem 0;
+}
+
+.editable-img-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.editable-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 11, 22, 0.82);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem;
+  border-radius: inherit;
+}
+
+.upload-btn-label {
+  background: var(--accent-red);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cms-url-input {
+  width: 90%;
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.78rem;
+}
+
+/* --- Navbar --- */
+.navbar {
+  width: 100%;
+  min-height: 82px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 4%;
+  background: var(--bg-navbar);
+  backdrop-filter: blur(16px);
+  border-bottom: 2px solid var(--accent-red);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+}
+
+.heart-icon {
+  font-size: 1.4rem;
+  background: rgba(225, 29, 72, 0.15);
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  padding: 0.45rem 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-weight: 800;
+  color: var(--accent-red);
+}
+
+.navbar-brand h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.brand-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.nav-btn:hover {
+  color: var(--text-main);
+}
+
+.nav-btn.active {
+  color: #ffffff;
+  background: var(--accent-red);
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.action-pill {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+  padding: 0.5rem 0.95rem;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.action-pill:hover {
+  border-color: var(--accent-red);
+}
+
+.action-pill.editing-active {
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+}
+
+.admin-controls {
+  display: flex;
+  gap: 0.4rem;
+}
+
+/* --- Hero Section con Foto del Doctor y Calendario --- */
+.inicio-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-container {
+  width: 100%;
+  max-width: 1540px;
+  margin: 0 auto;
+  min-height: calc(100vh - 82px);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2.5rem 4%;
+}
+
+.hero-top-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.hero-cards-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.3fr 0.95fr;
+  gap: 1.75rem;
+  align-items: stretch; /* Hace que ambas fichas empecen y se alineen a la par */
+}
+
+.hero-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.subtitle {
+  display: inline-block;
+  color: var(--accent-red);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.title {
+  font-size: clamp(2.1rem, 3.4vw, 3.3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-main);
+}
+
+.doctor-bio-card {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 1.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 1.75rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-card);
+  align-items: start;
+}
+
+.doctor-photo-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.doctor-portrait {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 2px solid var(--accent-red);
+}
+
+.doctor-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.conoce-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  border-bottom: 2px solid var(--accent-red);
+  padding-bottom: 0.4rem;
+}
+
+.bio-paragraph {
+  font-size: 0.93rem;
+  line-height: 1.6;
+  color: var(--text-body);
+  font-style: italic;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.highlight-cert {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--text-main);
+  background: rgba(225, 29, 72, 0.1);
+  padding: 0.75rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-red);
+}
+
+.hero-badges {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: rgba(225, 29, 72, 0.12);
+  color: var(--text-main);
+  border: 1px solid rgba(225, 29, 72, 0.3);
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* --- Calendario de Citas --- */
+.hero-calendar-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.calendar-card {
+  background: #ffffff;
+  color: #0f172a;
+  width: 100%;
+  max-width: 100%;
+  padding: 1.85rem;
+  border-radius: 22px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.calendar-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.calendar-header h2 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.calendar-header p {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.admin-schedule-toggle {
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-schedule-toggle.active {
+  background: var(--accent-red);
+}
+
+.admin-schedule-notice {
+  margin-top: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  background: #fef2f2;
+  border-left: 4px solid #e11d48;
+  color: #991b1b;
+  font-size: 0.78rem;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+
+.doctor-phone-edit {
+  margin-top: 0.75rem;
+  padding: 0.6rem;
+  background: #fff1f2;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #991b1b;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.form-group label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #334155;
+  text-transform: uppercase;
+}
+
+.calendar-input {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1.5px solid #cbd5e1;
+  background-color: #f8fafc;
+  color: #0f172a;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.select-constrained {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+}
+
+.slot-btn {
+  padding: 0.55rem 0.3rem;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.slot-btn:hover:not(:disabled) {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+.slot-btn.seleccionado {
+  background: var(--accent-red);
+  color: #ffffff;
+  border-color: var(--accent-red);
+}
+
+.slot-btn.ocupado {
+  background: #f1f5f9;
+  color: #94a3b8;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+.slot-btn.admin-slot-mode {
+  border-style: dashed;
+  border-width: 2px;
+}
+
+.slot-btn.admin-slot-mode.ocupado {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #ef4444;
+  cursor: pointer;
+}
+
+.btn-confirm-whatsapp {
+  width: 100%;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.95rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  margin-top: 0.4rem;
+  box-shadow: 0 8px 18px rgba(34, 197, 94, 0.35);
+}
+
+/* --- Sección de Trayectoria con Escudos y Cintilla Institucional --- */
+.trayectoria-section {
+  width: 100%;
+  padding: 4.5rem 6%;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.trayectoria-grid {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem 4rem;
+}
+
+.trayectoria-item {
+  display: grid;
+  grid-template-columns: 165px 1fr;
+  gap: 1.75rem;
+  align-items: center;
+}
+
+.trayectoria-logo-box {
+  width: 165px;
+  height: 165px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 0.6rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.trayectoria-shield-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.trayectoria-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.trayectoria-title {
+  color: #e11d48;
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.trayectoria-hospital {
+  color: var(--text-main);
+  font-size: 1.02rem;
+  font-weight: 500;
+}
+
+.trayectoria-aval {
+  color: var(--text-body);
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+.trayectoria-red-divider {
+  max-width: 1320px;
+  height: 2px;
+  background: #e11d48;
+  margin: 3.5rem auto 2rem auto;
+}
+
+.institutions-strip-wrapper {
+  max-width: 1320px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.institutions-strip-img {
+  width: 100%;
+  max-height: 135px;
+  object-fit: contain;
+  display: block;
+}
+
+/* --- Contenedor General de Pestañas --- */
+.page-container {
+  width: 100%;
+  min-height: calc(100vh - 82px);
+  padding: 4rem 5%;
+}
+
+.page-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 3rem auto;
+}
+
+.page-tag {
+  color: var(--accent-red);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  margin: 0.5rem 0;
+}
+
+.page-header p {
+  color: var(--text-muted);
+}
+
+/* --- Misión y Visión Editorial (Sin Emojis) --- */
+.mv-editorial-grid {
+  max-width: 1320px;
+  margin: 0 auto 3rem auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.25rem;
+}
+
+.mv-editorial-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 22px;
+  padding: 3rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+}
+
+.mv-editorial-card:hover {
+  transform: translateY(-4px);
+}
+
+.mv-card-featured {
+  border-top: 4px solid var(--accent-red);
+}
+
+.mv-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+
+.mv-svg-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: rgba(225, 29, 72, 0.12);
+  border: 1px solid rgba(225, 29, 72, 0.3);
+  color: var(--accent-red);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mv-svg-box svg {
+  width: 28px;
+  height: 28px;
+}
+
+.mv-index-num {
+  font-size: 3rem;
+  font-weight: 800;
+  color: rgba(148, 163, 184, 0.2);
+  line-height: 1;
+}
+
+.mv-small-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  color: var(--accent-red);
+  margin-bottom: 0.4rem;
+}
+
+.mv-main-heading {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.mv-accent-bar {
+  width: 55px;
+  height: 4px;
+  background: var(--accent-red);
+  border-radius: 2px;
+  margin: 1rem 0 1.5rem 0;
+}
+
+.mv-body-text {
+  font-size: 1.06rem;
+  line-height: 1.8;
+  color: var(--text-body);
+}
+
+.mv-pillars-row {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.mv-pillar-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 2rem;
+  border-radius: 18px;
+  box-shadow: var(--shadow-card);
+}
+
+.pillar-line {
+  width: 36px;
+  height: 3px;
+  background: #2563eb;
+  margin-bottom: 1rem;
+}
+
+.mv-pillar-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.65rem;
+  color: var(--text-main);
+}
+
+.mv-pillar-item p {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+/* --- Galería de 8 Estudios con Imagen --- */
+.estudios-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+  margin-bottom: 4.5rem;
+}
+
+.estudio-visual-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+}
+
+.estudio-img-wrapper {
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+}
+
+.estudio-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.estudio-visual-card:hover .estudio-img {
+  transform: scale(1.05);
+}
+
+.estudio-red-title {
+  padding: 1.1rem;
+  text-align: center;
+  color: var(--accent-red);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+/* --- Bloque NUESTROS SERVICIOS y ESPECIALISTA EN --- */
+.nuestros-servicios-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: var(--shadow-card);
+}
+
+.nuestros-servicios-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.nuestros-servicios-header h2 {
+  font-size: 2.2rem;
+  color: #2563eb;
+  letter-spacing: 1px;
+}
+
+.red-underline {
+  width: 220px;
+  height: 4px;
+  background: #b91c1c;
+  margin: 0.6rem auto 0 auto;
+}
+
+.servicios-split-container {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.servicios-bullet-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.servicios-bullet-list li {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.blue-dot {
+  color: #2563eb;
+  font-size: 1.5rem;
+}
+
+.especialista-side-box {
+  text-align: right;
+}
+
+.especialista-ribbon {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: #ffffff;
+  padding: 1rem 2rem;
+  font-size: 1.65rem;
+  font-weight: 800;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.especialista-right-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding-right: 1rem;
+}
+
+.especialista-right-list li {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.latido-slogan-box {
+  margin-top: 3rem;
+  text-align: center;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 2rem;
+}
+
+.latido-slogan {
+  font-size: 1.85rem;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+/* --- Ubicación y Google Maps --- */
+.ubicacion-top-banner {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-card);
+  align-items: center;
+}
+
+.gmaps-icon-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+}
+
+.gmaps-logo-visual {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 4.5rem;
+  font-weight: 800;
+  color: #16a34a;
+}
+
+.ubicacion-info-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.ubicanos-heading {
+  font-size: 2rem;
+  color: var(--accent-red);
+  font-weight: 800;
+}
+
+.divider-line {
+  width: 100%;
+  height: 2px;
+  background: var(--border-subtle);
+}
+
+.ubicacion-address {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #3b82f6;
+  max-width: 680px;
+}
+
+.ubicacion-clinic {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+.btn-open-maps {
+  display: inline-block;
+  background: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.map-iframe-wrapper {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid var(--accent-red);
+  box-shadow: var(--shadow-card);
+}
+
+/* --- Modal de Login Médico --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.modal-card {
+  background: var(--bg-secondary);
+  color: var(--text-main);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 420px;
+  border: 1px solid var(--border-subtle);
+}
+
+.modal-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.modal-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.error-msg {
+  display: block;
+  color: var(--accent-red);
+  font-size: 0.82rem;
+  margin-top: 0.4rem;
+}
+
+.modal-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.btn-secondary,
+.btn-primary {
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-secondary {
+  background: #334155;
+  color: #ffffff;
+}
+
+.btn-primary {
+  background: var(--accent-red);
+  color: #ffffff;
+}
+
+/* --- Responsividad --- */
+@media (max-width: 1150px) {
+  .hero-container,
+  .estudios-visual-grid,
+  .servicios-split-container,
+  .ubicacion-top-banner,
+  .trayectoria-grid,
+  .mv-editorial-grid,
+  .mv-pillars-row {
+    grid-template-columns: 1fr;
+  }
+  .estudios-visual-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-cards-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .doctor-bio-card,
+  .estudios-visual-grid,
+  .form-row,
+  .trayectoria-item {
+    grid-template-columns: 1fr;
+  }
+  .trayectoria-logo-box {
+    margin: 0 auto;
+  }
+}
