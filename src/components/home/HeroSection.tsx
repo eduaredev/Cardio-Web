@@ -51,8 +51,8 @@ const HeroSection = () => {
   };
 
   const handleReservarWhatsApp = () => {
-    if (!nombrePaciente.trim() || !telefonoPaciente.trim() || !horaSeleccionada) {
-      alert('Por favor completa tu nombre, teléfono de contacto y selecciona un horario disponible.');
+    if (!nombrePaciente.trim() || telefonoPaciente.length !== 10 || !horaSeleccionada) {
+      alert('Por favor completa tu nombre, ingresa un teléfono de 10 dígitos y selecciona un horario disponible.');
       return;
     }
 
@@ -229,9 +229,11 @@ const HeroSection = () => {
                   <label>2. Teléfono del Paciente *</label>
                   <input
                     type="tel"
-                    placeholder="Ej. 961 123 4567"
+                    placeholder="Ej. 9611234567"
+                    inputMode="numeric"
+                    maxLength={10}
                     value={telefonoPaciente}
-                    onChange={(e) => setTelefonoPaciente(e.target.value)}
+                    onChange={(e) => setTelefonoPaciente(e.target.value.replace(/\D/g, '').slice(0, 10))}
                     className="calendar-input"
                   />
                 </div>
