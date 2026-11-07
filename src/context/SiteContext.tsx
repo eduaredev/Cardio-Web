@@ -48,28 +48,28 @@ const DEFAULT_CONTENT = {
       especialidad: 'Cardiología Intervencionista',
       institucion: 'Hospital Central Militar CDMX.',
       aval: 'Avalado por la Universidad del Ejército y Fuerza Aérea',
-      logo: 'https://via.placeholder.com/160x160/ffffff/0f172a?text=Escuela+Militar'
+      logo: 'https://i.pinimg.com/736x/aa/85/fa/aa85faf671cb1c8c673221a4e8cc8e2e.jpg'
     },
     {
       id: 't2',
       especialidad: 'Rehabilitación Cardiaca',
       institucion: 'Centro Médico Nacional 20 de Noviembre.',
       aval: 'Avalado por la Universidad La Salle.',
-      logo: 'https://via.placeholder.com/160x160/ffffff/0f172a?text=Univ+La+Salle'
+      logo: 'https://i.pinimg.com/originals/a0/49/6c/a0496ceaa3ce9f99b43aa54c8726e6f9.png'
     },
     {
       id: 't3',
       especialidad: 'Cardiología',
       institucion: 'Hospital Central Sur de Alta Especialidad de PEMEX.',
       aval: 'Avalado por la Universidad Nacional Autónoma de México. (UNAM)',
-      logo: 'https://via.placeholder.com/160x160/ffffff/0f172a?text=UNAM'
+      logo: 'https://www.sa.unam.mx/images/escudo-unam-azul.png'
     },
     {
       id: 't4',
       especialidad: 'Médico Cirujano',
       institucion: 'Universidad Nacional Autónoma de Chiapas (UNACH)',
       aval: 'Facultad de Medicina Humana Dr. Manuel Velasco Suárez',
-      logo: 'https://via.placeholder.com/160x160/1e3a5f/ffffff?text=UNACH'
+      logo: 'https://yt3.googleusercontent.com/HyWQTUcedYTlifqkh_1Y7fIMALQuy-KXmTVVg95IfKieK1A-MBe98vNaCY2oN4WhIizFqJhH7Q=s900-c-k-c0x00ffffff-no-rj'
     }
   ] as TrayectoriaItem[],
   bannerInstitucionesUrl: logos,
@@ -107,6 +107,13 @@ const DEFAULT_CONTENT = {
 
 export type ContentType = typeof DEFAULT_CONTENT;
 
+const LEGACY_TRAJECTORY_LOGOS: Record<string, string> = {
+  t1: 'https://via.placeholder.com/160x160/ffffff/0f172a?text=Escuela+Militar',
+  t2: 'https://via.placeholder.com/160x160/ffffff/0f172a?text=Univ+La+Salle',
+  t3: 'https://via.placeholder.com/160x160/ffffff/0f172a?text=UNAM',
+  t4: 'https://via.placeholder.com/160x160/1e3a5f/ffffff?text=UNACH'
+};
+
 interface SiteContextProps {
   theme: 'dark' | 'light';
   toggleTheme: () => void;
@@ -135,7 +142,23 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [content, setContent] = useState<ContentType>(() => {
     const saved = localStorage.getItem('cardio_cms_content');
-    return saved ? { ...DEFAULT_CONTENT, ...JSON.parse(saved) } : DEFAULT_CONTENT;
+    if (!saved) return DEFAULT_CONTENT;
+
+    const savedContent = JSON.parse(saved) as Partial<ContentType>;
+    const trayectoriaItems = savedContent.trayectoriaItems?.map((item) => {
+      const defaultItem = DEFAULT_CONTENT.trayectoriaItems.find(({ id }) => id === item.id);
+      if (!defaultItem) return item;
+
+      return {
+        ...defaultItem,
+        ...item,
+        logo: item.logo === LEGACY_TRAJECTORY_LOGOS[item.id] || !item.logo
+          ? defaultItem.logo
+          : item.logo
+      };
+    }) ?? DEFAULT_CONTENT.trayectoriaItems;
+
+    return { ...DEFAULT_CONTENT, ...savedContent, trayectoriaItems };
   });
 
   const [citasOcupadas, setCitasOcupadas] = useState<Record<string, string[]>>(() => {
