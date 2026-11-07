@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import logos from '../assets/Logos.png';
 import fotoDoctor from '../assets/Doctor.png';
+<<<<<<< HEAD
 import rehabilitacionCardiaca from '../assets/rehabilitacioncardiaca.png';
 import cateterismoCardiaco from '../assets/cateterismocardiaco.png';
 import implanteMarcapasos from '../assets/implantemarcapasos.png';
@@ -9,6 +10,8 @@ import electrocardiograma from '../assets/electrocardiograma.png';
 import estudioHolter from '../assets/estudiohoter.png';
 import ecocardiograma from '../assets/ecocardiograma.png';
 import pruebaEjercicio from '../assets/pruebaejercicio.png';
+=======
+>>>>>>> bd803b578b4e834a1ece134927dadb5283b74c03
 
 export interface EstudioVisual {
   id: string;
@@ -35,7 +38,11 @@ const DEFAULT_CONTENT = {
   bioParrafo3: 'Trabajando posteriormente como médico adscrito en el servicio de Cuidados Intensivos Cardiovasculares del Hospital Central Militar en la Ciudad de México durante 3 años en donde desempeñó actividades académicas, y de atención al paciente críticamente enfermo.',
   bioParrafo4: 'Actualmente se encuentra Certificado por el Consejo Mexicano de Cardiología, en las 3 especialidades: Cardiología Clínica, Rehabilitación Cardíaca y Cardiología Intervencionista.',
   misionSubtitulo: 'PROPÓSITO CLÍNICO',
+<<<<<<< HEAD
   misionTitulo: 'Nuestra ',
+=======
+  misionTitulo: 'Nuestra Misión',
+>>>>>>> bd803b578b4e834a1ece134927dadb5283b74c03
   misionTexto: 'Brindar atención cardiológica de alta especialidad, diagnósticos precisos e intervenciones oportunas, acompañando a cada paciente en su rehabilitación cardíaca con calidez humana, ética médica y tecnología de vanguardia en Tuxtla Gutiérrez.',
   visionSubtitulo: 'PROYECCIÓN MÉDICA',
   visionTitulo: 'Nuestra Visión',
@@ -82,6 +89,7 @@ const DEFAULT_CONTENT = {
   ] as TrayectoriaItem[],
   bannerInstitucionesUrl: logos,
   estudiosVisuales: [
+<<<<<<< HEAD
   { id: '1', titulo: 'Electrocardiograma.', imagen: electrocardiograma },
   { id: '2', titulo: 'Estudio Holter', imagen: estudioHolter },
   { id: '3', titulo: 'Ecocardiograma.', imagen: ecocardiograma },
@@ -91,6 +99,17 @@ const DEFAULT_CONTENT = {
   { id: '7', titulo: 'Cateterismo cardíaco o Coronariografía Diagnóstica y Terapéutica.', imagen: cateterismoCardiaco },
   { id: '8', titulo: 'Rehabilitación Cardíaca.', imagen: rehabilitacionCardiaca }
 ] as EstudioVisual[],
+=======
+    { id: '1', titulo: 'Electrocardiograma.', imagen: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80' },
+    { id: '2', titulo: 'Estudio Holter', imagen: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80' },
+    { id: '3', titulo: 'Ecocardiograma.', imagen: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=600&q=80' },
+    { id: '4', titulo: 'Prueba de ejercicio o de esfuerzo.', imagen: 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=600&q=80' },
+    { id: '5', titulo: 'Estudio MAPA.', imagen: 'https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&w=600&q=80' },
+    { id: '6', titulo: 'Implante de Marcapasos.', imagen: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=600&q=80' },
+    { id: '7', titulo: 'Cateterismo cardíaco o Coronariografía Diagnóstica y Terapéutica.', imagen: 'https://images.unsplash.com/photo-1581595220892-b0739db3ba8c?auto=format&fit=crop&w=600&q=80' },
+    { id: '8', titulo: 'Rehabilitación Cardíaca.', imagen: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80' }
+  ] as EstudioVisual[],
+>>>>>>> bd803b578b4e834a1ece134927dadb5283b74c03
   listaServicios: [
     'Electrocardiograma',
     'Estudio Holter de 24 horas',
