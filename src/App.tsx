@@ -15,7 +15,7 @@ const MainContent = () => {
       {isEditing && (
         <div className="cms-top-banner">
           <span>
-            🛠️ <strong>MODO EDICIÓN MÉDICO ACTIVO:</strong> Haz clic sobre cualquier texto o imagen para modificarlo. Los cambios se guardan automáticamente.
+            <strong>MODO EDICIÓN ACTIVO:</strong> Haz clic sobre cualquier texto o imagen para modificarlo. Los cambios se guardan automáticamente.
           </span>
           <div className="cms-banner-actions">
             <button onClick={resetContent} className="cms-reset-btn">
