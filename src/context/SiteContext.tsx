@@ -156,6 +156,17 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!saved) return DEFAULT_CONTENT;
 
     const savedContent = JSON.parse(saved) as Partial<ContentType>;
+    const estudiosActualizados = DEFAULT_CONTENT.estudiosVisuales.map((estudioNuevo) => {
+    const estudioGuardado = savedContent.estudiosVisuales?.find(
+      (estudio) => estudio.id === estudioNuevo.id
+    );
+
+      return {
+        ...estudioGuardado,
+        ...estudioNuevo,
+        titulo: estudioGuardado?.titulo ?? estudioNuevo.titulo
+      };
+    });
     const trayectoriaItems = savedContent.trayectoriaItems?.map((item) => {
       const defaultItem = DEFAULT_CONTENT.trayectoriaItems.find(({ id }) => id === item.id);
       if (!defaultItem) return item;
@@ -169,7 +180,12 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
       };
     }) ?? DEFAULT_CONTENT.trayectoriaItems;
 
-    return { ...DEFAULT_CONTENT, ...savedContent, trayectoriaItems };
+  return {
+    ...DEFAULT_CONTENT,
+    ...savedContent,
+    trayectoriaItems,
+    estudiosVisuales: estudiosActualizados
+  };
   });
 
   const [citasOcupadas, setCitasOcupadas] = useState<Record<string, string[]>>(() => {
