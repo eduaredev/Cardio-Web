@@ -1,10 +1,28 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useSite, EditableText, EditableImage } from '../../context/SiteContext';
 
 const Servicios = () => {
   const { content, updateField, isEditing } = useSite();
+  const [selectedEstudioId, setSelectedEstudioId] = useState<string | null>(null);
+  const selectedEstudio = content.estudiosVisuales.find(({ id }) => id === selectedEstudioId);
 
-  const handleEstudioChange = (index: number, field: 'titulo' | 'imagen', value: string) => {
+  useEffect(() => {
+    if (!selectedEstudio) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSelectedEstudioId(null);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [selectedEstudio]);
+
+  const handleEstudioChange = (
+    index: number,
+    field: 'titulo' | 'imagen' | 'descripcion',
+    value: string
+  ) => {
     const copia = [...content.estudiosVisuales];
     copia[index] = { ...copia[index], [field]: value };
     updateField('estudiosVisuales', copia);
@@ -32,30 +50,87 @@ const Servicios = () => {
 
       <div className="estudios-visual-grid">
         {content.estudiosVisuales.map((estudio, index) => (
-          <motion.div
+          <motion.article
             key={estudio.id}
-            className="estudio-visual-card"
+            className={`estudio-visual-card${isEditing ? ' is-editing' : ''}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.06 }}
           >
-            <div className="estudio-img-wrapper">
-              <EditableImage
-                src={estudio.imagen}
-                alt={estudio.titulo}
-                className="estudio-img"
-                onChange={(newUrl) => handleEstudioChange(index, 'imagen', newUrl)}
-              />
-            </div>
+            {isEditing ? (
+              <div className="estudio-img-wrapper">
+                <EditableImage
+                  src={estudio.imagen}
+                  alt={estudio.titulo}
+                  className="estudio-img"
+                  onChange={(newUrl) => handleEstudioChange(index, 'imagen', newUrl)}
+                />
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="estudio-image-button"
+                onClick={() => setSelectedEstudioId(estudio.id)}
+                aria-label={`Ver información de ${estudio.titulo}`}
+                aria-haspopup="dialog"
+              >
+                <EditableImage
+                  src={estudio.imagen}
+                  alt={estudio.titulo}
+                  className="estudio-img"
+                  onChange={(newUrl) => handleEstudioChange(index, 'imagen', newUrl)}
+                />
+              </button>
+            )}
             <EditableText
               as="h3"
               className="estudio-red-title"
               value={estudio.titulo}
               onChange={(newVal) => handleEstudioChange(index, 'titulo', newVal)}
             />
-          </motion.div>
+            {isEditing && (
+              <div className="estudio-description-editor">
+                <EditableText
+                  as="p"
+                  className="estudio-description-text"
+                  value={estudio.descripcion}
+                  multiline
+                  onChange={(newVal) => handleEstudioChange(index, 'descripcion', newVal)}
+                />
+              </div>
+            )}
+          </motion.article>
         ))}
       </div>
+
+      {selectedEstudio && (
+        <div
+          className="estudio-modal-backdrop"
+          onClick={() => setSelectedEstudioId(null)}
+        >
+          <section
+            className="estudio-modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="estudio-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="estudio-modal-close"
+              onClick={() => setSelectedEstudioId(null)}
+              aria-label="Cerrar información"
+              autoFocus
+            >
+              &times;
+            </button>
+            <div className="estudio-modal-content">
+              <h2 id="estudio-modal-title">{selectedEstudio.titulo}</h2>
+              <p>{selectedEstudio.descripcion}</p>
+            </div>
+          </section>
+        </div>
+      )}
 
       {/* Parte 2: Bloque "NUESTROS SERVICIOS" y Banner "ESPECIALISTA EN" */}
       <div className="nuestros-servicios-block">

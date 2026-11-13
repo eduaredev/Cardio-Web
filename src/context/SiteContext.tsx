@@ -14,6 +14,7 @@ export interface EstudioVisual {
   id: string;
   titulo: string;
   imagen: string;
+  descripcion: string;
 }
 
 export interface TrayectoriaItem {
@@ -84,21 +85,101 @@ const DEFAULT_CONTENT = {
   bannerInstitucionesUrl: logos,
 
   estudiosVisuales: [
-  { id: '1', titulo: 'Electrocardiograma.', imagen: electrocardiograma },
-  { id: '2', titulo: 'Estudio Holter', imagen: estudioHolter },
-  { id: '3', titulo: 'Ecocardiograma.', imagen: ecocardiograma },
-  { id: '4', titulo: 'Prueba de ejercicio o de esfuerzo.', imagen: pruebaEjercicio },
-  { id: '5', titulo: 'Estudio MAPA.', imagen: estudioMapa },
-  { id: '6', titulo: 'Implante de Marcapasos.', imagen: implanteMarcapasos },
-  { id: '7', titulo: 'Cateterismo cardíaco o Coronariografía Diagnóstica y Terapéutica.', imagen: cateterismoCardiaco },
-  { id: '8', titulo: 'Rehabilitación Cardíaca.', imagen: rehabilitacionCardiaca }
-] as EstudioVisual[],
+    {
+      id: '1',
+      titulo: 'Electrocardiograma.',
+      imagen: electrocardiograma,
+      descripcion: 'Un electrocardiograma (ECG o EKG, por sus siglas en inglés) es una prueba médica que registra la actividad eléctrica del corazón. Es una herramienta diagnóstica utilizada para evaluar la función cardíaca y detectar posibles problemas cardíacos.\n\nEl ECG se realiza colocando electrodos en la piel del pecho, los brazos y las piernas del paciente, que registran la actividad eléctrica del corazón en forma de trazos en un papel o en una pantalla de visualización. El ECG permite a los médicos obtener información sobre la frecuencia cardíaca, el ritmo cardíaco, la duración de los intervalos entre los latidos del corazón y la morfología de las ondas eléctricas, lo que puede ayudar en el diagnóstico de diversas condiciones cardíacas, como arritmias, isquemia cardíaca, enfermedades del músculo cardíaco (miocardio), trastornos del ritmo, enfermedades de las arterias coronarias, inflamaciones del corazón (pericarditis), entre otros.\n\nEl ECG es una prueba de rutina que se realiza en muchos escenarios clínicos, como parte de un chequeo médico, para evaluar síntomas cardíacos como palpitaciones, dolor en el pecho, mareos o desmayos, o para monitorear la respuesta del corazón a medicamentos o tratamientos cardíacos. Es una herramienta importante en la evaluación y manejo de enfermedades cardíacas, y puede ser complementado con otras pruebas de diagnóstico para obtener una evaluación más completa del estado cardíaco del paciente.'
+    },
+    {
+      id: '2',
+      titulo: 'Estudio Holter',
+      imagen: estudioHolter,
+      descripcion: [
+        'Un estudio Holter es un examen médico que se utiliza para evaluar el ritmo cardíaco y la actividad eléctrica del corazón durante un período prolongado de tiempo, generalmente durante 24 a 48 horas. El Holter es un monitor portátil que registra continuamente la actividad eléctrica del corazón mientras el paciente realiza sus actividades cotidianas.',
+        'Se utiliza para detectar y diagnosticar problemas cardíacos, especialmente aquellos que pueden ocurrir de forma intermitente o que no son fácilmente detectables durante un examen médico de rutina. Algunos de los problemas cardíacos que se pueden detectar con un estudio Holter incluyen:',
+        'Arritmias cardíacas: alteraciones en el ritmo normal del corazón, como latidos irregulares o demasiado rápidos o lentos.',
+        'Isquemia miocárdica: falta de flujo sanguíneo en el músculo cardíaco.',
+        'El estudio Holter es una prueba no invasiva y generalmente indolora que se puede realizar en un centro de atención médica o en el hogar del paciente. Durante el examen, el paciente llevará el dispositivo Holter durante el período de tiempo prescrito, generalmente de 24 a 48 horas. Después de que se complete el examen, el dispositivo se devuelve al médico para su análisis y diagnóstico.'
+      ].join('\n\n')
+    },
+    {
+      id: '3',
+      titulo: 'Ecocardiograma y Ecocardiograma Expres',
+      imagen: ecocardiograma,
+      descripcion: [
+        'Un ecocardiograma es un examen médico no invasivo que utiliza ondas sonoras para producir imágenes detalladas del corazón. Es una de las pruebas más comunes utilizadas para evaluar la estructura y función del corazón, y se utiliza para diagnosticar y monitorear una variedad de enfermedades cardíacas.',
+        'El ecocardiograma se puede realizar mientras el paciente está acostado o sentado, y por lo general dura unos 30 minutos.',
+        'El ecocardiograma se utiliza para evaluar la estructura y función del corazón, incluyendo:',
+        'El tamaño del corazón y las cámaras cardíacas.',
+        'El grosor de las paredes del corazón.',
+        'La función de las válvulas cardíacas.',
+        'El flujo sanguíneo a través del corazón.',
+        'La presencia de coágulos sanguíneos en el corazón.',
+        'La presencia de enfermedades cardíacas congénitas o adquiridas.',
+        'El ecocardiograma es una herramienta importante en el diagnóstico y tratamiento de enfermedades cardíacas. Es una prueba no invasiva, segura y relativamente fácil de realizar. Los resultados del examen se utilizan para guiar el tratamiento y monitorizar el progreso del paciente a lo largo del tiempo.'
+      ].join('\n\n')
+    },
+    {
+      id: '4',
+      titulo: 'Prueba de esfuerzo y prueba de ejercicio cardiopulmonar.',
+      imagen: pruebaEjercicio,
+      descripcion: [
+        'La prueba de esfuerzo, también conocida como prueba de ejercicio o ergometría, es un examen médico en el que se mide la respuesta del corazón y el sistema cardiovascular a un esfuerzo físico. Durante la prueba, el paciente camina o corre en una cinta rodante o bicicleta estacionaria, mientras se registran la presión arterial, la frecuencia cardíaca, el ritmo cardíaco, la respiración y la actividad eléctrica del corazón (mediante un electrocardiograma o ECG).',
+        'La prueba de esfuerzo se utiliza para evaluar la capacidad cardiovascular del paciente, identificar problemas cardíacos que pueden no ser evidentes en reposo, diagnosticar enfermedades cardíacas, evaluar la eficacia del tratamiento y establecer un programa de ejercicios seguro y efectivo para el paciente.',
+        'Los resultados de la prueba de esfuerzo pueden ayudar a los médicos a diagnosticar enfermedades cardiovasculares, como enfermedad coronaria, arritmias cardíacas, insuficiencia cardíaca y otros trastornos del corazón. También se utiliza para evaluar la eficacia del tratamiento, determinar el pronóstico y establecer un plan de tratamiento y de actividad física individualizado para el paciente.',
+        'La prueba de esfuerzo es un examen relativamente seguro y no invasivo. Sin embargo, puede haber riesgos para pacientes con enfermedades cardíacas avanzadas o para aquellos que tienen otros problemas de salud que pueden ser agravados por el ejercicio. Por lo tanto, es importante que la prueba sea supervisada por un médico especialista en cardiología y que se realice en un entorno seguro y controlado.'
+      ].join('\n\n')
+    },
+    {
+      id: '5',
+      titulo: 'Estudio MAPA.',
+      imagen: estudioMapa,
+      descripcion: [
+        'El estudio MAPA (Monitorización Ambulatoria de la Presión Arterial) es una prueba diagnóstica que se utiliza para medir la presión arterial del paciente en un período de 24 horas, mientras este lleva puesto un dispositivo automático de medición de la presión arterial.',
+        'Durante el estudio, el paciente lleva puesto un dispositivo portátil que registra la presión arterial en intervalos regulares (generalmente cada 15-30 minutos) durante un período de 24 horas. La prueba permite medir la presión arterial del paciente mientras realiza sus actividades diarias normales, lo que puede ayudar a identificar patrones y fluctuaciones de la presión arterial que pueden no ser detectados en una única medición en el consultorio médico.',
+        'Permite evaluar la eficacia del tratamiento y determinar si la presión arterial del paciente está siendo controlada adecuadamente. Además, puede proporcionar información valiosa sobre el riesgo cardiovascular del paciente y ayudar a predecir el riesgo de complicaciones cardiovasculares en el futuro.',
+        'Es necesario que el estudio MAPA sea interpretado por un médico especialista en cardiología, quien analizará los resultados y determinará el plan de tratamiento más adecuado para el paciente.'
+      ].join('\n\n')
+    },
+    {
+      id: '6',
+      titulo: 'Implante de Marcapasos.',
+      imagen: implanteMarcapasos,
+      descripcion: [
+        'Un marcapaso es un dispositivo médico que se utiliza para regular el ritmo cardíaco en pacientes con trastornos del ritmo cardíaco, como la bradicardia (ritmo cardíaco demasiado lento) o la taquicardia (ritmo cardíaco demasiado rápido). El marcapaso se coloca bajo la piel, generalmente en la zona del pecho, y se conecta al corazón mediante uno o más cables.',
+        'El marcapaso emite impulsos eléctricos al corazón que ayudan a regular su ritmo cardíaco. Estos impulsos pueden ser programados por un médico especialista en cardiología para adaptarse a las necesidades individuales del paciente. En general, un marcapaso ayuda a mantener un ritmo cardíaco regular y constante, lo que puede mejorar la calidad de vida del paciente y prevenir complicaciones cardiovasculares.',
+        'Existen diferentes tipos de marcapasos, que se diferencian en función de su capacidad de detección de la actividad cardíaca y de la forma en que entregan los impulsos eléctricos al corazón. Por ejemplo, algunos marcapasos pueden detectar cuando el corazón está latiendo de forma natural y ajustar la frecuencia de los impulsos en consecuencia. Otros marcapasos tienen la capacidad de responder a las necesidades del paciente en función de su nivel de actividad física.'
+      ].join('\n\n')
+    },
+    {
+      id: '7',
+      titulo: 'Cateterismo cardíaco o Coronariografía Diagnóstica y Terapéutica.',
+      imagen: cateterismoCardiaco,
+      descripcion: [
+        'La coronariografía, también conocida como angiografía coronaria o cinecoronariografía, es una técnica médica que se utiliza para examinar el flujo sanguíneo en las arterias coronarias del corazón. Es un procedimiento invasivo que se realiza en un hospital bajo anestesia local o sedación y requiere una preparación previa, como el ayuno y la suspensión de medicamentos.',
+        'Durante la coronariografía, se inserta un catéter (un tubo largo y delgado) a través de una arteria en el brazo o la ingle, el cual se lleva hasta el corazón. Luego, se inyecta un medio de contraste a través del catéter para visualizar las arterias coronarias mediante radiografías. De esta manera, se pueden detectar obstrucciones o estrechamientos en las arterias coronarias que puedan estar causando síntomas como dolor en el pecho o falta de aire.',
+        'La coronariografía es una técnica muy útil para el diagnóstico de enfermedades cardíacas, como la enfermedad coronaria, y también se puede utilizar para realizar procedimientos terapéuticos, como la angioplastia coronaria o la colocación de stents en las arterias coronarias obstruidas en caso de un infarto al corazón.',
+        'El cateterismo cardíaco también se utiliza para medir las presiones de las cavidades del corazón y la presión de los pulmones en caso de pacientes con hipertensión pulmonar.'
+      ].join('\n\n')
+    },
+    {
+      id: '8',
+      titulo: 'Rehabilitación Cardíaca.',
+      imagen: rehabilitacionCardiaca,
+      descripcion: [
+        'La rehabilitación cardíaca es un programa multidisciplinario de tratamiento y cuidado que se enfoca en ayudar a las personas que han sufrido una enfermedad o afección del corazón a recuperarse y mejorar su salud cardiovascular.',
+        'Generalmente incluye un conjunto de intervenciones terapéuticas, que incluyen ejercicio físico, educación sobre nutrición y estilo de vida saludable, manejo del estrés y asesoramiento psicológico. Estas intervenciones son diseñadas para ayudar a las personas a mejorar su capacidad física, reducir el riesgo de complicaciones cardíacas y mejorar su calidad de vida.',
+        'La rehabilitación cardíaca puede ser recomendada para personas que han sufrido un infarto de miocardio (ataque al corazón), han tenido una cirugía cardíaca o han sido diagnosticadas con una enfermedad cardíaca crónica, como la insuficiencia cardíaca. También puede ser recomendada para personas que tienen un alto riesgo de desarrollar enfermedad cardíaca, como aquellas con diabetes, hipertensión arterial, obesidad o colesterol elevado.'
+      ].join('\n\n')
+    }
+  ] as EstudioVisual[],
 
   listaServicios: [
     'Electrocardiograma',
     'Estudio Holter de 24 horas',
     'Monitoreo Ambulatorio de la Presión Arterial (MAPA)',
-    'Ecocardiograma',
+    'Ecocardiograma y Ecocardiograma Expres',
     'Prueba de esfuerzo',
     'Valoración de Riesgo quirúrgico',
     'Cateterismo Cardíaco',
@@ -157,14 +238,30 @@ export const SiteProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const savedContent = JSON.parse(saved) as Partial<ContentType>;
     const estudiosActualizados = DEFAULT_CONTENT.estudiosVisuales.map((estudioNuevo) => {
-    const estudioGuardado = savedContent.estudiosVisuales?.find(
-      (estudio) => estudio.id === estudioNuevo.id
-    );
+      const estudioGuardado = savedContent.estudiosVisuales?.find(
+        (estudio) => estudio.id === estudioNuevo.id
+      );
+      const descripcionAnterior: Record<string, string> = {
+        '1': '.',
+        '2': 'Monitorea el ritmo del corazón durante las actividades cotidianas para identificar cambios a lo largo del día.',
+        '3': 'Utiliza ultrasonido para observar la estructura del corazón y valorar su funcionamiento.',
+        '4': 'Evalúa la respuesta del corazón al ejercicio bajo supervisión médica.',
+        '5': 'Registra la presión arterial a intervalos durante las actividades habituales y el descanso.',
+        '6': 'Procedimiento para colocar un dispositivo que ayuda a regular el ritmo cardíaco cuando está indicado.',
+        '7': 'Permite observar las arterias del corazón y, según la valoración médica, realizar un tratamiento durante el procedimiento.',
+        '8': 'Programa supervisado de ejercicio y acompañamiento para apoyar la recuperación y el cuidado cardiovascular.'
+      };
 
       return {
         ...estudioGuardado,
         ...estudioNuevo,
-        titulo: estudioGuardado?.titulo ?? estudioNuevo.titulo
+        titulo: estudioGuardado?.titulo ?? estudioNuevo.titulo,
+        descripcion: !estudioGuardado?.descripcion ||
+          estudioGuardado.descripcion === descripcionAnterior[estudioNuevo.id] ||
+          (estudioNuevo.id === '1' &&
+            estudioGuardado.descripcion === 'Registra la actividad eléctrica del corazón en reposo y ayuda a evaluar el ritmo cardíaco.')
+          ? estudioNuevo.descripcion
+          : estudioGuardado?.descripcion ?? estudioNuevo.descripcion
       };
     });
     const trayectoriaItems = savedContent.trayectoriaItems?.map((item) => {
