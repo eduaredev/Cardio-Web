@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
         <div className="navbar-brand" onClick={() => setActiveTab('inicio')}>
           <span className="heart-icon">ICONO</span>
           <div>
-            <h2>Cardiólogo en Tuxtla</h2>
+            <h2>Cardiólogo</h2>
           </div>
         </div>
 

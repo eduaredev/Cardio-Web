@@ -105,7 +105,7 @@ const DEFAULT_CONTENT = {
     },
     {
       id: '3',
-      titulo: 'Ecocardiograma y Ecocardiograma Expres',
+      titulo: 'Ecocardiograma y Ecocardiograma Estrés',
       imagen: ecocardiograma,
       descripcion: [
         'Un ecocardiograma es un examen médico no invasivo que utiliza ondas sonoras para producir imágenes detalladas del corazón. Es una de las pruebas más comunes utilizadas para evaluar la estructura y función del corazón, y se utiliza para diagnosticar y monitorear una variedad de enfermedades cardíacas.',
@@ -179,8 +179,8 @@ const DEFAULT_CONTENT = {
     'Electrocardiograma',
     'Estudio Holter de 24 horas',
     'Monitoreo Ambulatorio de la Presión Arterial (MAPA)',
-    'Ecocardiograma y Ecocardiograma Expres',
-    'Prueba de esfuerzo',
+    'Ecocardiograma y/o Estrés',
+    'Prueba de esfuerzo y Prueba de ejercicio cardiopulmonar',
     'Valoración de Riesgo quirúrgico',
     'Cateterismo Cardíaco',
     'Implante de Marcapasos',
