@@ -5,27 +5,66 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 6%;
-  background: rgba(6, 11, 22, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+/* MODO OSCURO */
+.navbar.dark-mode {
+  background: #060b16;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.navbar-brand:hover {
-  transform: scale(1.02);
+/* MODO CLARO */
+.navbar.light-mode {
+  background: #ffffff;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
 
+/* Títulos del navbar */
+.navbar.dark-mode .navbar-brand h1,
+.navbar.dark-mode .navbar-brand h2 {
+  color: #ffffff;
+}
+
+.navbar.light-mode .navbar-brand h1,
+.navbar.light-mode .navbar-brand h2 {
+  color: #111827;
+}
+
+/* Navegación */
+.navbar.light-mode .navbar-links {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+}
+
+.navbar.light-mode .nav-btn {
+  color: #475569;
+}
+
+.navbar.light-mode .nav-btn:hover {
+  color: #111827;
+  background: #e2e8f0;
+}
+
+.navbar.light-mode .nav-btn.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.2);
+}
+
+/* Botones de acciones */
+.navbar.light-mode .action-pill {
+  color: #334155;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
 /* Contenedor del logo */
 .heart-icon {
   width: 65px;
@@ -54,6 +93,12 @@
   color: #ffffff;
   letter-spacing: -0.3px;
 }
+.navbar-brand h1 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin: 0;
+}
 
 .brand-sub {
   font-size: 0.78rem;
@@ -70,27 +115,50 @@
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
+/* Botones en modo oscuro */
+.navbar.dark-mode .navbar-links {
+  background: rgba(15, 23, 42, 0.7);
+}
 
-.nav-btn {
-  background: transparent;
-  border: none;
+.navbar.dark-mode .nav-btn {
   color: #94a3b8;
-  font-size: 0.92rem;
-  font-weight: 600;
-  padding: 0.6rem 1.25rem;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.25s ease;
-  font-family: inherit;
 }
 
-.nav-btn:hover {
-  color: #f8fafc;
-  background: rgba(255, 255, 255, 0.04);
+.navbar.dark-mode .nav-btn:hover {
+  color: #ffffff;
 }
 
-.nav-btn.active {
+/* Botones en modo claro */
+.navbar.light-mode .navbar-links {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+}
+
+.navbar.light-mode .nav-btn {
+  color: #475569;
+}
+
+.navbar.light-mode .nav-btn:hover {
+  color: #111827;
+  background: #e2e8f0;
+}
+.navbar.dark-mode .nav-btn.active,
+.navbar.light-mode .nav-btn.active {
   color: #ffffff;
   background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
-  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.35);
+  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.25);
+}
+
+/* Botones de acciones en modo oscuro */
+.navbar.dark-mode .action-pill {
+  color: #ffffff;
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Botones de acciones en modo claro */
+.navbar.light-mode .action-pill {
+  color: #334155;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
 }

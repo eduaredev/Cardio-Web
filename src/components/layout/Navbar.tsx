@@ -27,7 +27,8 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
 
   return (
     <>
-      <header className="navbar">
+      <header className={`navbar ${theme === 'dark' ? 'dark-mode' : 'light-mode'}`}>
+
         <div className="navbar-brand" onClick={() => setActiveTab('inicio')}>
           <span className="heart-icon">
             <img src={logod} alt="Logo Cardiólogo" />
