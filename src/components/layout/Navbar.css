@@ -26,19 +26,28 @@
   transform: scale(1.02);
 }
 
+/* Contenedor del logo */
 .heart-icon {
-  font-size: 1.6rem;
-  background: rgba(225, 29, 72, 0.15);
-  border: 1px solid rgba(225, 29, 72, 0.35);
-  width: 46px;
-  height: 46px;
+  width: 65px;
+  height: 65px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
   border-radius: 12px;
+  background: rgba(225, 29, 72, 0.15);
+  border: 1px solid rgba(225, 29, 72, 0.35);
   box-shadow: 0 0 20px rgba(225, 29, 72, 0.25);
 }
 
+.heart-icon img {
+  width: 125%;
+  height: 125%;
+  object-fit: contain;
+  display: block;
+  padding: 0;
+}
 .navbar-brand h2 {
   font-size: 1.2rem;
   font-weight: 800;

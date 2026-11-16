@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useSite } from '../../context/SiteContext';
+import logod from "../../assets/LogoDoc.jpeg";
+import './Navbar.css';
 
 interface NavbarProps {
   activeTab: string;
@@ -27,12 +29,15 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
     <>
       <header className="navbar">
         <div className="navbar-brand" onClick={() => setActiveTab('inicio')}>
-          <span className="heart-icon">ICONO</span>
+          <span className="heart-icon">
+            <img src={logod} alt="Logo Cardiólogo" />
+          </span>
+
           <div>
-            <h2>Cardiólogo</h2>
+            <h1>DR. ANTONIO CITALÁN</h1>
+            <h2>CARDIOLOGIA Y REHABILITACION</h2>
           </div>
         </div>
-
         <nav className="navbar-links">
           <button
             className={activeTab === 'inicio' ? 'nav-btn active' : 'nav-btn'}
