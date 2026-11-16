@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSite } from '../../context/SiteContext';
-import logod from "../../assets/LogoDoc.jpeg";
+import logod from "../../assets/LogoDoc-cropped.png";
 import './Navbar.css';
 
 interface NavbarProps {
