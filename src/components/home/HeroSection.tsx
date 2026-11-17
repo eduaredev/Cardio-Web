@@ -165,15 +165,15 @@ const HeroSection = () => {
                 value={content.bioParrafo3}
                 onChange={(val) => updateField('bioParrafo3', val)}
               />
-
-              <EditableText
-                as="p"
-                multiline
-                className="bio-paragraph highlight-cert"
-                value={content.bioParrafo4}
-                onChange={(val) => updateField('bioParrafo4', val)}
-              />
             </div>
+
+            <EditableText
+              as="p"
+              multiline
+              className="bio-paragraph highlight-cert"
+              value={content.bioParrafo4}
+              onChange={(val) => updateField('bioParrafo4', val)}
+            />
           </motion.div>
 
           {/* Agenda de Citas */}

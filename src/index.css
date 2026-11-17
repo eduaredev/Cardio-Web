@@ -306,9 +306,9 @@ body,
 }
 
 .doctor-bio-card {
-  height: 100%;
+  align-self: start;
   display: grid;
-  grid-template-columns: 350px 1fr;
+  grid-template-columns: minmax(240px, 0.9fr) minmax(0, 1.1fr);
   gap: 1.75rem;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -353,10 +353,13 @@ body,
   font-style: italic;
   text-align: justify;
   text-justify: inter-word;
+  text-align-last: left;
+  text-wrap: pretty;
   hyphens: auto;
 }
 
 .highlight-cert {
+  grid-column: 1 / -1;
   font-style: normal;
   font-weight: 700;
   color: var(--text-main);

@@ -87,7 +87,7 @@ const DEFAULT_CONTENT = {
   estudiosVisuales: [
     {
       id: '1',
-      titulo: 'Electrocardiograma.',
+      titulo: 'Electrocardiograma',
       imagen: electrocardiograma,
       descripcion: 'Un electrocardiograma (ECG o EKG, por sus siglas en inglés) es una prueba médica que registra la actividad eléctrica del corazón. Es una herramienta diagnóstica utilizada para evaluar la función cardíaca y detectar posibles problemas cardíacos.\n\nEl ECG se realiza colocando electrodos en la piel del pecho, los brazos y las piernas del paciente, que registran la actividad eléctrica del corazón en forma de trazos en un papel o en una pantalla de visualización. El ECG permite a los médicos obtener información sobre la frecuencia cardíaca, el ritmo cardíaco, la duración de los intervalos entre los latidos del corazón y la morfología de las ondas eléctricas, lo que puede ayudar en el diagnóstico de diversas condiciones cardíacas, como arritmias, isquemia cardíaca, enfermedades del músculo cardíaco (miocardio), trastornos del ritmo, enfermedades de las arterias coronarias, inflamaciones del corazón (pericarditis), entre otros.\n\nEl ECG es una prueba de rutina que se realiza en muchos escenarios clínicos, como parte de un chequeo médico, para evaluar síntomas cardíacos como palpitaciones, dolor en el pecho, mareos o desmayos, o para monitorear la respuesta del corazón a medicamentos o tratamientos cardíacos. Es una herramienta importante en la evaluación y manejo de enfermedades cardíacas, y puede ser complementado con otras pruebas de diagnóstico para obtener una evaluación más completa del estado cardíaco del paciente.'
     },
@@ -122,7 +122,7 @@ const DEFAULT_CONTENT = {
     },
     {
       id: '4',
-      titulo: 'Prueba de esfuerzo y prueba de ejercicio cardiopulmonar.',
+      titulo: 'Prueba de esfuerzo y prueba de ejercicio cardiopulmonar',
       imagen: pruebaEjercicio,
       descripcion: [
         'La prueba de esfuerzo, también conocida como prueba de ejercicio o ergometría, es un examen médico en el que se mide la respuesta del corazón y el sistema cardiovascular a un esfuerzo físico. Durante la prueba, el paciente camina o corre en una cinta rodante o bicicleta estacionaria, mientras se registran la presión arterial, la frecuencia cardíaca, el ritmo cardíaco, la respiración y la actividad eléctrica del corazón (mediante un electrocardiograma o ECG).',
@@ -133,7 +133,7 @@ const DEFAULT_CONTENT = {
     },
     {
       id: '5',
-      titulo: 'Estudio MAPA.',
+      titulo: 'Estudio MAPA',
       imagen: estudioMapa,
       descripcion: [
         'El estudio MAPA (Monitorización Ambulatoria de la Presión Arterial) es una prueba diagnóstica que se utiliza para medir la presión arterial del paciente en un período de 24 horas, mientras este lleva puesto un dispositivo automático de medición de la presión arterial.',
@@ -144,7 +144,7 @@ const DEFAULT_CONTENT = {
     },
     {
       id: '6',
-      titulo: 'Implante de Marcapasos.',
+      titulo: 'Implante de Marcapasos',
       imagen: implanteMarcapasos,
       descripcion: [
         'Un marcapaso es un dispositivo médico que se utiliza para regular el ritmo cardíaco en pacientes con trastornos del ritmo cardíaco, como la bradicardia (ritmo cardíaco demasiado lento) o la taquicardia (ritmo cardíaco demasiado rápido). El marcapaso se coloca bajo la piel, generalmente en la zona del pecho, y se conecta al corazón mediante uno o más cables.',
@@ -154,7 +154,7 @@ const DEFAULT_CONTENT = {
     },
     {
       id: '7',
-      titulo: 'Cateterismo cardíaco o Coronariografía Diagnóstica y Terapéutica.',
+      titulo: 'Cateterismo cardíaco o Coronariografía Diagnóstica y Terapéutica',
       imagen: cateterismoCardiaco,
       descripcion: [
         'La coronariografía, también conocida como angiografía coronaria o cinecoronariografía, es una técnica médica que se utiliza para examinar el flujo sanguíneo en las arterias coronarias del corazón. Es un procedimiento invasivo que se realiza en un hospital bajo anestesia local o sedación y requiere una preparación previa, como el ayuno y la suspensión de medicamentos.',
@@ -165,7 +165,7 @@ const DEFAULT_CONTENT = {
     },
     {
       id: '8',
-      titulo: 'Rehabilitación Cardíaca.',
+      titulo: 'Rehabilitación Cardíaca',
       imagen: rehabilitacionCardiaca,
       descripcion: [
         'La rehabilitación cardíaca es un programa multidisciplinario de tratamiento y cuidado que se enfoca en ayudar a las personas que han sufrido una enfermedad o afección del corazón a recuperarse y mejorar su salud cardiovascular.',
