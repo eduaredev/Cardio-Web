@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSite } from '../../context/SiteContext';
 import logod from "../../assets/LogoDoc-cropped.png";
 import './Navbar.css';
@@ -13,6 +13,29 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const handleKeyboardShortcut = (event: KeyboardEvent) => {
+      if (event.ctrlKey && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'a') {
+        if (!isAdmin) {
+          event.preventDefault();
+          setShowModal(true);
+        }
+      }
+
+      if (event.key === 'Escape') {
+        setShowModal(false);
+        setPassword('');
+        setError('');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyboardShortcut);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyboardShortcut);
+    };
+  }, [isAdmin]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,9 +95,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
           </button>
 
           {!isAdmin ? (
-            <button onClick={() => setShowModal(true)} className="action-pill admin-btn">
-              Acceso Médico
-            </button>
+            null
           ) : (
             <div className="admin-controls">
               <button
